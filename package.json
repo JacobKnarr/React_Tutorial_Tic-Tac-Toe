@@ -5,7 +5,11 @@
     "react-scripts": "^5.0.0"
   },
   "main": "/index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/react": "^18.2.29",
+    "eslint": "^8.51.0",
+    "eslint-plugin-react": "^7.33.2"
+  },
   "keywords": [],
   "name": "react-tutorial-tic-tac-toe",
   "description": "Small React tutorial of a Tic-Tac-Toe game with move state.",
@@ -15,5 +19,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

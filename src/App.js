@@ -16,7 +16,7 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  const movesList = moves.map((moves, move) => {
+  const movesList = moves.map((_moves, move) => {
     let description = move === 0 ? "Go to game start" : "Go to move " + move;
 
     return (
@@ -91,7 +91,7 @@ function calculateWinner(move) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
 
   for (let i = 0; i < lines.length; i++) {

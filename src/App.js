@@ -21,17 +21,23 @@ export default function Game() {
     setIsAscending(!isAscending);
   }
 
-  const movesList = moves.map((_moves, move) => {
+  const movesList = moves.map((_squares, move) => {
     const index = isAscending ? move : moves.length - 1 - move;
     const description =
       index === 0 ? "Go to game start" : "Go to move: " + index;
 
+    const row = Math.floor(move / 3);
+    const col = index % 3;
+    const location = index > 0 ? `- (${row}, ${col})` : "";
+
     return (
       <li key={index}>
         {index !== currentMove ? (
-          <button onClick={() => setMove(index)}>{description}</button>
+          <button onClick={() => setMove(index)}>
+            {description} {location}
+          </button>
         ) : (
-          "You are at move: " + index
+          `You are at move: ${index} ${location}`
         )}
       </li>
     );
@@ -131,7 +137,7 @@ function calculateWinner(move) {
     if (move[a] && move[a] === move[b] && move[a] === move[c]) {
       return {
         player: move[a],
-        line: [a, b, c],
+        line: lines[i],
       };
     }
   }

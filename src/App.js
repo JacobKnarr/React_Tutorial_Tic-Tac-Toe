@@ -56,24 +56,30 @@ function Board({ xIsNext, move, onMove }) {
     onMove(nextMove);
   }
 
+  const board = [];
+  for (let row = 0; row < 3; row++) {
+    const rowSquares = [];
+    for (let col = 0; col < 3; col++) {
+      const index = 3 * row + col;
+      rowSquares.push(
+        <Square
+          key={index}
+          value={move[index]}
+          onSquareClick={() => handleClick(index)}
+        />,
+      );
+    }
+    board.push(
+      <div key={row} className="board-row">
+        {rowSquares}
+      </div>,
+    );
+  }
+
   return (
     <>
       <div className="status">{status}</div>
-      <div className="board-row">
-        <Square value={move[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={move[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={move[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square value={move[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={move[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={move[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={move[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={move[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={move[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+      {board}
     </>
   );
 }

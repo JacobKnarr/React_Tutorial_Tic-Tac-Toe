@@ -17,13 +17,13 @@ export default function Game() {
   }
 
   const movesList = moves.map((_moves, move) => {
-    let description = move === 0 ? "Go to game start" : "Go to move " + move;
+    let liContent = "You are at move: " + move;
+    let description = move === 0 ? "Go to game start" : "Go to move: " + move;
+    if (move !== currentMove) {
+      liContent = <button onClick={() => setMove(move)}>{description}</button>;
+    }
 
-    return (
-      <li key={move}>
-        <button onClick={() => setMove(move)}>{description}</button>
-      </li>
-    );
+    return <li key={move}>{liContent}</li>;
   });
 
   return (
@@ -32,7 +32,7 @@ export default function Game() {
         <Board xIsNext={xIsNext} move={move} onMove={handleMove} />
       </div>
       <div className="game-info">
-        <ol>{movesList}</ol>
+        <ul>{movesList}</ul>
       </div>
     </div>
   );

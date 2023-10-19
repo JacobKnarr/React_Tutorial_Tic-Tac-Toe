@@ -19,7 +19,6 @@ export default function Game() {
 
   function toggleSortOrder() {
     setIsAscending(!isAscending);
-    moves.reverse();
   }
 
   const movesList = moves.map((_moves, move) => {

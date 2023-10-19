@@ -54,9 +54,14 @@ export default function Game() {
 
 function Board({ xIsNext, move, onMove }) {
   const winner = calculateWinner(move);
-  let status = winner
-    ? "Winner: " + winner
-    : "Next Player: " + (xIsNext ? "X" : "O");
+  let status;
+  if (winner) {
+    status = "Winner: " + winner.player;
+  } else if (move.every((square) => square)) {
+    status = "It's a draw.";
+  } else {
+    status = "Next Player: " + (xIsNext ? "X" : "O");
+  }
 
   function handleClick(i) {
     if (calculateWinner(move) || move[i]) return;
@@ -71,14 +76,18 @@ function Board({ xIsNext, move, onMove }) {
     const rowSquares = [];
     for (let col = 0; col < 3; col++) {
       const index = 3 * row + col;
+      const isWinner = winner && winner.line.includes(index);
+
       rowSquares.push(
         <Square
           key={index}
           value={move[index]}
           onSquareClick={() => handleClick(index)}
+          isWinner={isWinner}
         />,
       );
     }
+
     board.push(
       <div key={row} className="board-row">
         {rowSquares}
@@ -94,9 +103,12 @@ function Board({ xIsNext, move, onMove }) {
   );
 }
 
-function Square({ value, onSquareClick }) {
+function Square({ value, onSquareClick, isWinner }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button
+      className={`square ${isWinner ? "winner-square" : null}`}
+      onClick={onSquareClick}
+    >
       {value}
     </button>
   );
@@ -117,7 +129,10 @@ function calculateWinner(move) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (move[a] && move[a] === move[b] && move[a] === move[c]) {
-      return move[a];
+      return {
+        player: move[a],
+        line: [a, b, c],
+      };
     }
   }
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Game() {
   const [moves, setMoves] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [isAscending, setIsAscending] = useState(true);
   const move = moves[currentMove];
   const xIsNext = currentMove % 2 === 0;
 
@@ -16,15 +17,22 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
+  function toggleSortOrder() {
+    setIsAscending(!isAscending);
+    moves.reverse();
+  }
+
   const movesList = moves.map((_moves, move) => {
-    let description = move === 0 ? "Go to game start" : "Go to move: " + move;
+    const index = isAscending ? move : moves.length - 1 - move;
+    const description =
+      index === 0 ? "Go to game start" : "Go to move: " + index;
 
     return (
-      <li key={move}>
-        {move !== currentMove ? (
-          <button onClick={() => setMove(move)}>{description}</button>
+      <li key={index}>
+        {index !== currentMove ? (
+          <button onClick={() => setMove(index)}>{description}</button>
         ) : (
-          "You are at move: " + move
+          "You are at move: " + index
         )}
       </li>
     );
@@ -36,6 +44,9 @@ export default function Game() {
         <Board xIsNext={xIsNext} move={move} onMove={handleMove} />
       </div>
       <div className="game-info">
+        <button onClick={toggleSortOrder}>
+          Toggle Sorting Order: {isAscending ? "Ascending" : "Descending"}
+        </button>
         <ul>{movesList}</ul>
       </div>
     </div>
